@@ -33,6 +33,7 @@ public class CupDesconto implements Serializable {
 	
 	private BigDecimal valorPorcentagemDesconto;
 	
+	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dtValidadeCupom;
 

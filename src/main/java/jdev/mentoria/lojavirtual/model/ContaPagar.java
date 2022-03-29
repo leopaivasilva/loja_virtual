@@ -37,10 +37,12 @@ public class ContaPagar implements Serializable {
 	@Column(nullable = false)
 	private String descricao;
 	
+	@Column(nullable = false)
 	private BigDecimal valorTotal;
 	
 	private BigDecimal valorDesconto;
 	
+	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dtVencimento;
 	

@@ -29,8 +29,13 @@ public class StatusRastreio implements Serializable {
 	@Column(nullable = false)
 	private String centroDistribuicao;
 	
+	@Column(nullable = false)
 	private String cidade;
+	
+	@Column(nullable = false)
 	private String estado;
+	
+	@Column(nullable = false)
 	private String status;
 	
 	@ManyToOne

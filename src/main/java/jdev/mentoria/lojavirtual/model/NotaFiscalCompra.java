@@ -33,12 +33,20 @@ public class NotaFiscalCompra implements Serializable {
 	@Column(nullable = false)
 	private String numeroNota;
 	
+	@Column(nullable = false)
 	private String serieNota;
+	
 	private String descricaoOBS;
+	
+	@Column(nullable = false)
 	private BigDecimal valorTotal;
+	
 	private BigDecimal valorDesconto;
+	
+	@Column(nullable = false)
 	private BigDecimal valorIcms;
 	
+	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dtCompra;
 	
