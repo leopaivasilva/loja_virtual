@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jdev.mentoria.lojavirtual.ExceptionMentoriaJava;
 import jdev.mentoria.lojavirtual.model.Acesso;
 import jdev.mentoria.lojavirtual.repository.AcessoRepository;
 import jdev.mentoria.lojavirtual.service.AcessoService;
@@ -30,7 +31,16 @@ public class AcessoController {
 	
 	@ResponseBody /*POde dar um retorno da API*/
 	@PostMapping(value = "**/salvarAcesso")  /*Mapeando a url para receber o JSON*/
-	public ResponseEntity<Acesso> salvarAcesso(@RequestBody Acesso acesso) { /*Recebe o JSON e converte para Objeto*/
+	public ResponseEntity<Acesso> salvarAcesso(@RequestBody Acesso acesso) throws ExceptionMentoriaJava { /*Recebe o JSON e converte para Objeto*/
+		
+		if (acesso.getId() == null) {
+			
+			List<Acesso> acessos = acessoRepository.buscarAcessoDesc(acesso.getDescricao().toUpperCase());
+			
+			if (!acessos.isEmpty()) {
+				throw new ExceptionMentoriaJava("Já existe cadastrado acesso com a descrição: " + acesso.getDescricao());
+			}
+		}
 		
 		Acesso acessoSalvo = acessoService.save(acesso);
 		
@@ -57,9 +67,13 @@ public class AcessoController {
 	
 	@ResponseBody /*POde dar um retorno da API*/
 	@GetMapping(value = "**/consultarAcesso/{id}")
-	public ResponseEntity<Acesso> consultarAcesso(@PathVariable("id")  Long id ) {
+	public ResponseEntity<Acesso> consultarAcesso(@PathVariable("id")  Long id ) throws ExceptionMentoriaJava {
 		
-		Acesso acesso = acessoRepository.findById(id).get();
+		Acesso acesso = acessoRepository.findById(id).orElse(null);
+		
+		if (acesso  == null) {
+			throw new ExceptionMentoriaJava("Código informando "+ id +" não encontrado no sistema");
+		}
 		
 		return new ResponseEntity<Acesso>(acesso, HttpStatus.OK);
 	}	
@@ -69,7 +83,7 @@ public class AcessoController {
 	@GetMapping(value = "**/consultarAcessoDes/{desc}")
 	public ResponseEntity<List<Acesso>> consultarAcesso(@PathVariable("desc")  String desc ) {
 		
-		List<Acesso> acesso = acessoRepository.buscarAcessoDesc(desc);
+		List<Acesso> acesso = acessoRepository.buscarAcessoDesc(desc.toUpperCase());
 		
 		return new ResponseEntity<List<Acesso>>(acesso, HttpStatus.OK);
 	}	
