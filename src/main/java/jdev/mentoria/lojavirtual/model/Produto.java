@@ -42,6 +42,10 @@ public class Produto implements Serializable {
 	private NotaItemProduto notaItemProduto;
 	*/
 	
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
+	private Pessoa empresa;	
+	
 	@Column(nullable = false)
 	private Double peso;
 	
@@ -206,6 +210,14 @@ public class Produto implements Serializable {
 			return false;
 		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
 	}
 	
 	
