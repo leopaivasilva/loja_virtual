@@ -2,6 +2,8 @@ package jdev.mentoria.lojavirtual.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +29,13 @@ public class MarcaProdutoController {
 	
 	@ResponseBody /*POde dar um retorno da API*/
 	@PostMapping(value = "**/salvarMarca")  /*Mapeando a url para receber o JSON*/
-	public ResponseEntity<MarcaProduto> salvarMarcaProduto(@RequestBody MarcaProduto marcaProduto) throws ExceptionMentoriaJava { /*Recebe o JSON e converte para Objeto*/
+	public ResponseEntity<MarcaProduto> salvarMarcaProduto(@RequestBody @Valid MarcaProduto marcaProduto) throws ExceptionMentoriaJava { /*Recebe o JSON e converte para Objeto*/
 		
 		if (marcaProduto.getId() == null) {			
 			List<MarcaProduto> marcaProdutos = marcaRepository.buscarMarcaDesc(marcaProduto.getNomeDesc().toUpperCase());
 			
 			if (!marcaProdutos.isEmpty()) {
-				throw new ExceptionMentoriaJava("Já existe cadastrado acesso com a descrição: " + marcaProduto.getNomeDesc());
+				throw new ExceptionMentoriaJava("Já existe cadastrado marca do produto com a descrição informada: " + marcaProduto.getNomeDesc());
 			}
 		}
 		
