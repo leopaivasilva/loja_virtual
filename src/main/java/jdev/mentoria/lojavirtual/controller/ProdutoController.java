@@ -54,10 +54,6 @@ public class ProdutoController {
 			throw new ExceptionMentoriaJava("Marca do Produto deve ser informada");
 		}
 		
-		if (produto.getNotaItemProduto() == null || produto.getNotaItemProduto().getId() <= 0) {
-			throw new ExceptionMentoriaJava("Nota do Item do Produto deve ser informada");			
-		}
-		
 		Produto produtoSalvo = produtoRepository.save(produto);
 		
 		return new ResponseEntity<Produto>(produtoSalvo, HttpStatus.OK);
