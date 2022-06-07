@@ -2,17 +2,22 @@ package jdev.mentoria.lojavirtual.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -69,7 +74,19 @@ public class Produto implements Serializable {
 	@NotNull(message = "A Categoria do Produto deve ser informado")
 	@ManyToOne(targetEntity = CategoriaProduto.class)
 	@JoinColumn(name = "categoria_produto_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "categoria_produto_fk"))
-	private CategoriaProduto categoriaProduto;		
+	private CategoriaProduto categoriaProduto;	
+	
+	
+	@OneToMany(mappedBy = "produto", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<ImagemProduto> imagens = new ArrayList<ImagemProduto>();
+	
+	public void setImagens(List<ImagemProduto> imagens) {
+		this.imagens = imagens;
+	}
+	
+	public List<ImagemProduto> getImagens() {
+		return imagens;
+	}
 	
 	public CategoriaProduto getCategoriaProduto() {
 		return categoriaProduto;
@@ -100,9 +117,9 @@ public class Produto implements Serializable {
 	
 	@NotNull(message = "Quantidade do Estoque do Produto deve ser informado")
 	@Column(nullable = false)
-	private Integer QtdeEstoque = 0;
+	private Integer qtdeEstoque = 0;
 	
-	private Integer QtdeAlertaEstoque = 0;
+	private Integer qtdeAlertaEstoque = 0;
 	
 	private String linkYouTube;
 	
@@ -193,20 +210,21 @@ public class Produto implements Serializable {
 		this.valorVenda = valorVenda;
 	}
 
+
 	public Integer getQtdeEstoque() {
-		return QtdeEstoque;
+		return qtdeEstoque;
 	}
 
 	public void setQtdeEstoque(Integer qtdeEstoque) {
-		QtdeEstoque = qtdeEstoque;
+		this.qtdeEstoque = qtdeEstoque;
 	}
 
 	public Integer getQtdeAlertaEstoque() {
-		return QtdeAlertaEstoque;
+		return qtdeAlertaEstoque;
 	}
 
 	public void setQtdeAlertaEstoque(Integer qtdeAlertaEstoque) {
-		QtdeAlertaEstoque = qtdeAlertaEstoque;
+		this.qtdeAlertaEstoque = qtdeAlertaEstoque;
 	}
 
 	public String getLinkYouTube() {
