@@ -1,7 +1,6 @@
 package jdev.mentoria.lojavirtual.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
@@ -29,12 +28,13 @@ public class NotaFiscalVenda implements Serializable {
 
 	@Column(nullable = false)
 	private String numero;
-	
+
 	@Column(nullable = false)
 	private String serie;
 
 	@Column(nullable = false)
 	private String tipo;
+
 	
 	@Column(columnDefinition = "text", nullable = false)
 	private String xml;
@@ -43,12 +43,34 @@ public class NotaFiscalVenda implements Serializable {
 	private String pdf;
 	
 	@OneToOne
-	@JoinColumn(name = "venda_compra_loja_virtual_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virtual_fk"))	
-    private VendaCompraLojaVirtual vendaCompraLojaVirtual;
+	@JoinColumn(name = "venda_compra_loja_virt_id", nullable = true, 
+	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virt_fk"))
+	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
 	
-	@ManyToOne(targetEntity = Pessoa.class)
-	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
-	private Pessoa empresa;	
+	
+	@ManyToOne(targetEntity = PessoaJuridica.class)
+	@JoinColumn(name = "empresa_id", nullable = false, 
+	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_id_fk"))
+	private PessoaJuridica empresa;
+	
+	
+	
+
+	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
+		return vendaCompraLojaVirtual;
+	}
+
+	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
+		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
+	}
+
+	public PessoaJuridica getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(PessoaJuridica empresa) {
+		this.empresa = empresa;
+	}
 
 	public Long getId() {
 		return id;
@@ -100,7 +122,10 @@ public class NotaFiscalVenda implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -112,24 +137,12 @@ public class NotaFiscalVenda implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		NotaFiscalVenda other = (NotaFiscalVenda) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
-	public Pessoa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Pessoa empresa) {
-		this.empresa = empresa;
-	}
-
-	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
-		return vendaCompraLojaVirtual;
-	}
-
-	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
-		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
-	}
-
-	
 }

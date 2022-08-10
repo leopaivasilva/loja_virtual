@@ -16,10 +16,10 @@ public interface PessoaRepository extends CrudRepository<PessoaJuridica, Long> {
 	public List<PessoaJuridica> pesquisaPorNomePJ(String nome);
 	
 	@Query(value = "select pj from PessoaJuridica pj where pj.cnpj = ?1")
-	public PessoaJuridica existeCNPJCadastrado(String cnpj);
+	public PessoaJuridica existeCnpjCadastrado(String cnpj);
 	
 	@Query(value = "select pj from PessoaJuridica pj where pj.cnpj = ?1")
-	public List<PessoaJuridica> existeCNPJCadastradoList(String cnpj);
+	public List<PessoaJuridica> existeCnpjCadastradoList(String cnpj);
 	
 	
 	@Query(value = "select pf from PessoaFisica pf where pf.cpf = ?1")
@@ -31,10 +31,9 @@ public interface PessoaRepository extends CrudRepository<PessoaJuridica, Long> {
 	
 	
 	@Query(value = "select pj from PessoaJuridica pj where pj.inscEstadual = ?1")
-	public PessoaJuridica existeInscEstadualCadastrado(String inscEstadual);
+	public PessoaJuridica existeInsEstadualCadastrado(String inscEstadual);
 	
 	
 	@Query(value = "select pj from PessoaJuridica pj where pj.inscEstadual = ?1")
-	public List<PessoaJuridica> existeInscEstadualCadastradoList(String inscEstadual);	
-
+	public List<PessoaJuridica> existeInsEstadualCadastradoList(String inscEstadual);
 }

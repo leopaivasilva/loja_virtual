@@ -65,14 +65,14 @@ public class TestePessoaUsuario extends TestCase {
 		pessoaJuridica.getEnderecos().add(endereco1);
 		pessoaJuridica.getEnderecos().add(endereco2);
 		
-		pessoaController.salvarPJ(pessoaJuridica);
+		pessoaController.salvarPj(pessoaJuridica);
 		
 	}
 	
 	@Test
 	public void testCadPessoaFisica() throws ExceptionMentoriaJava {
 		
-		PessoaJuridica pessoaJuridica = pesssoaRepository.existeCNPJCadastrado("1647987989047");		
+		PessoaJuridica pessoaJuridica = pesssoaRepository.existeCnpjCadastrado("1647987989047");		
 
 		PessoaFisica pessoaFisica = new PessoaFisica();
 		pessoaFisica.setCpf("713.482.980-49");
@@ -109,7 +109,7 @@ public class TestePessoaUsuario extends TestCase {
 		pessoaFisica.getEnderecos().add(endereco2);
 		pessoaFisica.getEnderecos().add(endereco1);
 
-		pessoaFisica = pessoaController.salvarPF(pessoaFisica).getBody();
+		pessoaFisica = pessoaController.salvarPf(pessoaFisica).getBody();
 		
 		assertEquals(true, pessoaFisica.getId() > 0 );
 		
